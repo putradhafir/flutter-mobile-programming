@@ -7,8 +7,8 @@
 
 ## Daftar Tugas
 1. [Resume Materi Sesi 3](resume.md)
-2. [Soal 1: Multiple Constructor](soal1_multiple_constructor/)
-3. [Soal 2: Enkapsulasi Lengkap](soal2_enkapsulasi/)
+2. [Soal 1: Multiple Constructor](https://dartpad.dev/93837dde185c194bc00e04688f0afb43/)
+3. [Soal 2: Enkapsulasi Lengkap](https://dartpad.dev/ea39617757c6a53a1e6c78836b2436c5/)
 
 ## Cara Menjalankan Program
 ```bash

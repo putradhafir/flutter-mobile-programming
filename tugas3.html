@@ -1,0 +1,327 @@
+import 'dart:convert';
+
+class Mobil {
+  String? merk;
+  int? tahun;
+
+  // Parameterized constructor
+  Mobil(this.merk, this.tahun);
+
+  // Named constructor
+  Mobil.baru() {
+    merk = 'Toyota';
+    tahun = 2023;
+  }
+
+  // Named constructor dengan parameter
+  Mobil.dariJson(Map<String, dynamic> json) {
+    merk = json['merk'];
+    tahun = json['tahun'];
+  }
+
+  // Override toString for better print output
+  @override
+  String toString() {
+    return 'Mobil{merk: $merk, tahun: $tahun}';
+  }
+}
+
+void main() {
+  print('--- Demonstrasi Class Mobil ---');
+
+  // 1. Menggunakan constructor default (parameterized constructor)
+  var mobilA = Mobil('Honda', 2020);
+  print('Mobil A (constructor default): $mobilA');
+
+  // 2. Menggunakan named constructor Mobil.baru()
+  var mobilB = Mobil.baru();
+  print('Mobil B (named constructor .baru): $mobilB');
+
+  // 3. Menggunakan named constructor Mobil.dariJson()
+  String jsonString = '{"merk": "Suzuki", "tahun": 2021}';
+  Map<String, dynamic> jsonData = jsonDecode(jsonString);
+  var mobilC = Mobil.dariJson(jsonData);
+  print('Mobil C (named constructor .dariJson): $mobilC');
+
+  // Contoh lain dengan named constructor Mobil.dariJson()
+  Map<String, dynamic> anotherJsonData = {'merk': 'Mitsubishi', 'tahun': 2022};
+  var mobilD = Mobil.dariJson(anotherJsonData);
+  print('Mobil D (named constructor .dariJson): $mobilD');
+
+  print('\n--- Akhir Demonstrasi ---');
+}
+
+-----------------
+class Warna {
+  final int r, g, b;
+  const Warna(this.r, this.g, this.b);
+
+  @override
+  String toString() {
+    return 'Warna(r: $r, g: $g, b: $b)';
+  }
+}
+
+void main() {
+  const merah = Warna(255, 0, 0);
+  const merahLagi = Warna(255, 0, 0); // Menggunakan instance yang sama di memory
+
+  print(merah);
+  print(merahLagi);
+}
+-------------
+class Titik {
+  final double x, y;
+
+  Titik(double x, double y)
+    : x = x.abs(),
+      y = y.abs() {
+    print('Titik dibuat di (${this.x}, ${this.y})'); // Using this.x and this.y to show the absolute values
+    
+  }
+}
+
+void main(){
+  // Contoh penggunaan class Titik
+  print('Membuat objek Titik pertama:');
+  var titik1 = Titik(3.0, 4.0); // x=3.0, y=4.0
+  print('Titik 1: x = ${titik1.x}, y = ${titik1.y}');
+
+  print('\nMembuat objek Titik kedua dengan nilai negatif:');
+  var titik2 = Titik(-5.0, 10.0); // x=5.0 (abs), y=10.0 (abs)
+  print('Titik 2: x = ${titik2.x}, y = ${titik2.y}');
+
+  print('\nMembuat objek Titik ketiga dengan nilai negatif di kedua koordinat:');
+  var titik3 = Titik(-1.5, -2.5); // x=1.5 (abs), y=2.5 (abs)
+  print('Titik 3: x = ${titik3.x}, y = ${titik3.y}');
+}
+
+
+-------------
+class Person {
+  String _name;
+  int age;
+  Person(this._name, this.age);
+  
+}
+
+void main() {
+  Person person = Person("Salma", 20);
+  print(person.age);
+  // print(person._name); // error karena private
+  
+}
+-------------
+class Person {
+  String _name;
+  int age;
+  Person(this._name, this.age);
+  
+  String get getName1 {
+    return _name;
+  }
+  
+  String getName() {
+    return _name;
+  }
+}
+
+void main() {
+  Person person = Person("Salma", 20);
+  print(person.age);
+  // print(person._name); // error karena private
+  print(person.getName());
+  print(person.getName1);
+
+}
+
+
+-------------
+class Person {
+  String _name;
+  int age;
+  Person(this._name, this.age);
+  
+  set setName1(String name) {
+    _name = name;
+  }
+
+  void setName(String name) {
+    _name = name;
+  }
+
+  String getName() {
+    return _name;
+  }
+}
+
+void main() {
+  Person person = Person("Salma", 20);
+  print(person.age);
+  // print(person._name); // error karena private
+  person.setName('Aqila');
+  print(person.getName());
+  person.setName1='Nabila';
+  print(person.getName());
+  
+}
+
+----------------
+class Produk {
+  String _nama;
+  double _harga;
+  
+  Produk(this._nama, this._harga);
+  
+  // Getter
+  String get nama => _nama;
+  double get harga => _harga;
+  
+  // Setter dengan validasi
+  set nama(String value) {
+    if (value.length >= 3) {
+      _nama = value;
+    } else {
+      print('Gagal memperbarui nama: Nama harus memiliki minimal 3 karakter.');
+    }
+  }
+  
+  set harga(double value) {
+    if (value > 0) {
+      _harga = value;
+    } else {
+      print('Gagal memperbarui harga: Harga harus lebih besar dari 0.');
+    }
+  }
+}
+
+void main() {
+  // Membuat instance dari class Produk
+  var produk1 = Produk('Monitor Samsung', 3500.0);
+
+  print('--- Informasi Produk Awal ---');
+  print('Nama Produk: ${produk1.nama}');
+  print('Harga Produk: Rp ${produk1.harga.toStringAsFixed(2)}');
+
+  // Menggunakan setter untuk memperbarui nilai
+  print('\n--- Memperbarui Produk ---');
+  produk1.nama = 'Keyboard Mekanik';
+  produk1.harga = 1200.0;
+
+  print('Nama Produk (setelah update): ${produk1.nama}');
+  print('Harga Produk (setelah update): Rp ${produk1.harga.toStringAsFixed(2)}');
+
+  // Menguji validasi setter
+  print('\n--- Menguji Validasi Setter ---');
+  
+  // Nama yang tidak valid (kurang dari 3 karakter)
+  print('Mencoba mengatur nama menjadi "TV"');
+  produk1.nama = 'TV'; // Ini seharusnya tidak mengubah nama
+  print('Nama Produk (setelah gagal update nama): ${produk1.nama}');
+
+  // Harga yang tidak valid (kurang dari atau sama dengan 0)
+  print('Mencoba mengatur harga menjadi -100.0');
+  produk1.harga = -100.0; // Ini seharusnya tidak mengubah harga
+  print('Harga Produk (setelah gagal update harga): Rp ${produk1.harga.toStringAsFixed(2)}');
+
+  print('Mencoba mengatur harga menjadi 0.0');
+  produk1.harga = 0.0; // Ini seharusnya tidak mengubah harga
+  print('Harga Produk (setelah gagal update harga): Rp ${produk1.harga.toStringAsFixed(2)}');
+
+  // Memastikan nilai tidak berubah setelah percobaan yang tidak valid
+  print('\n--- Status Akhir Produk ---');
+  print('Nama Produk: ${produk1.nama}');
+  print('Harga Produk: Rp ${produk1.harga.toStringAsFixed(2)}');
+}
+
+----------
+class User {
+  String _username;
+  String _password;
+
+  User(this._username, this._password);
+
+  String get username => _username;
+
+  bool login(String username, String password) {
+    return _username == username && _password == password;
+  }
+
+  void gantiPassword(String lama, String baru) {
+    if (_password == lama) {
+      if (baru.length >= 8) {
+        _password = baru;
+        print('Password berhasil diubah.');
+      } else {
+        print('Gagal mengubah password: Password baru harus memiliki minimal 8 karakter.');
+      }
+    } else {
+      print('Gagal mengubah password: Password lama tidak sesuai.');
+    }
+  }
+}
+
+void main() {
+  // 1. Create a User instance
+  print('--- Inisialisasi User ---');
+  final User user1 = User('admin_user', 'securePass123');
+  print('User created with username: ${user1.username}');
+  print('');
+
+  // 2. Test login functionality
+  print('--- Uji Coba Login ---');
+  String testUsername = 'admin_user';
+  String correctPassword = 'securePass123';
+  String incorrectPassword = 'wrongPass';
+
+  // Successful login
+  if (user1.login(testUsername, correctPassword)) {
+    print('Login successful for user: $testUsername');
+  } else {
+    print('Login failed for user: $testUsername');
+  }
+
+  // Failed login (incorrect password)
+  if (user1.login(testUsername, incorrectPassword)) {
+    print('Login successful for user: $testUsername (This should not happen)');
+  } else {
+    print('Login failed for user: $testUsername (Incorrect password, as expected)');
+  }
+  print('');
+
+  // 3. Test gantiPassword functionality
+  print('--- Uji Coba Ganti Password ---');
+
+  // Successful password change
+  print('Attempting to change password from "securePass123" to "newSecurePass456":');
+  user1.gantiPassword('securePass123', 'newSecurePass456');
+  // Verify login with new password
+  if (user1.login(testUsername, 'newSecurePass456')) {
+    print('Login successful with new password "newSecurePass456".');
+  } else {
+    print('Login failed with new password (Something went wrong).');
+  }
+  print('');
+
+  // Failed password change (incorrect old password)
+  print('Attempting to change password with incorrect old password:');
+  user1.gantiPassword('wrongOldPass', 'anotherNewPass');
+  // Verify login still works with current password
+  if (user1.login(testUsername, 'newSecurePass456')) {
+    print('Login successful with current password, change failed as expected.');
+  } else {
+    print('Login failed with current password (Something went wrong after failed change).');
+  }
+  print('');
+
+  // Failed password change (new password too short)
+  print('Attempting to change password with a new password that is too short:');
+  user1.gantiPassword('newSecurePass456', 'short');
+  // Verify login still works with current password
+  if (user1.login(testUsername, 'newSecurePass456')) {
+    print('Login successful with current password, change failed as expected.');
+  } else {
+    print('Login failed with current password (Something went wrong after failed change).');
+  }
+  print('');
+}

@@ -14,8 +14,8 @@
 ```bash
 # Untuk Soal 1
 cd soal1_multiple_constructor
-dart mahasiswa.dart
+dart https://dartpad.dev/93837dde185c194bc00e04688f0afb43
 
 # Untuk Soal 2
 cd soal2_enkapsulasi
-dart user.dart
+https://dartpad.dev/ea39617757c6a53a1e6c78836b2436c5
